@@ -26,17 +26,13 @@
       <div class="bg-dark text-secondary px-4 py-5 text-center">
         <div class="py-5">
           <h1 class="display-5 fw-bold text-white py-5">Color approximator</h1>
-          <div class="col-lg-6 mx-auto pb-5">
+          <div class="col-lg-6 mx-auto">
             <p class="fs-5">
               Quickly get the closest color in a different paint range.
             </p>
             <p class="fs-5 mb-4">
               Choose the desired color range between Citadel, Vallejo, AK...
             </p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center py-3">
-              <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Custom button</button>
-              <button type="button" class="btn btn-outline-light btn-lg px-4">Secondary</button>
-            </div>
           </div>
         </div>
       </div>
@@ -44,7 +40,7 @@
       <div class="b-example-divider mb-0"></div>
 
       <div class="px-4 py-5 text-center">
-        <form hx-post="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/default/get_closest_color"
+        <form hx-post="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/get_closest_color"
             hx-target="#result"
             hx-ext="json-enc"
           >
