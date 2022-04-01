@@ -114,7 +114,7 @@
           // {"name": "Blue Fluorescent", "paint_type": "Fluorescent", "paint_color": "#0370b1", "difference": 110.6752004741803}
           document.getElementById('result').innerHTML = `<div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Success!</h4>
-            <p>The closest color is <span class="text-primary">${newColor.name} (${newColor.paint_color})</span>.</p>`
+            <p>The closest color is <span class="text-primary">${newColor.name}</span> <span style="color:${newColor.paint_color}">&#9632;</span></p>`
         } catch (errors) {
           console.error(errors);
           document.getElementById('result').innerHTML = `<div class="alert alert-danger" role="alert">
