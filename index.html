@@ -46,7 +46,7 @@
             <div class="col-sm-6 col-lg-4 offset-lg-1">
               <label for="range" class="form-label">Paint Range</label>
               <select class="form-select" name="paint_range_id" required="">
-                <option>Choose...</option>
+                <option value="" disabled selected>Choose...</option>
                 <option value="CPS">Citadel</option>
                 <option value="VMC">Vallejo Model</option>
                 <option value="VGC">Vallejo Game</option>
@@ -59,9 +59,12 @@
 
             <div class="col-sm-6 col-lg-4 offset-lg-1">
               <label for="color" class="form-label">Color (hex code)</label>
-              <input type="text" class="form-control" name="color" placeholder="" value="" required="">
+              <input type="text" class="form-control" name="color" placeholder="#0370b1" value="" required="">
               <div class="invalid-feedback">
                 Valid color hex code is required.
+              </div>
+              <div>
+                <button id="color-picker" class="btn btn-secondary btn-sm mt-1">Use color picker</button>
               </div>
             </div>
 
@@ -82,8 +85,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
 
     <script>
+      var colorInput = document.querySelector('input[name="color"]');
+      var colorPicker = document.querySelector('#color-picker');
+      var picker = new Picker({parent:colorPicker, alpha:false});
+
+      picker.onChange = function(color) {
+          colorInput.value = color.printHex(false);
+      };
+
       const form = document.querySelector('form');
 
       let axiosConfig = {
