@@ -40,15 +40,12 @@
       <div class="b-example-divider mb-0"></div>
 
       <div class="px-4 py-5 text-center">
-        <form hx-post="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/get_closest_color"
-            hx-target="#result"
-            hx-ext="json-enc"
-          >
+        <form method="POST" action="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/get_closest_color">
           <div class="row g-3">
 
             <div class="col-sm-6 col-lg-4 offset-lg-1">
               <label for="range" class="form-label">Paint Range</label>
-              <select class="form-select" id="paint_range_id" required="">
+              <select class="form-select" name="paint_range_id" required="">
                 <option>Choose...</option>
                 <option value="CPS">Citadel</option>
                 <option value="VMC">Vallejo Model</option>
@@ -62,7 +59,7 @@
 
             <div class="col-sm-6 col-lg-4 offset-lg-1">
               <label for="color" class="form-label">Color (hex code)</label>
-              <input type="text" class="form-control" id="color" placeholder="" value="" required="">
+              <input type="text" class="form-control" name="color" placeholder="" value="" required="">
               <div class="invalid-feedback">
                 Valid color hex code is required.
               </div>
@@ -84,7 +81,31 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      const form = document.querySelector('form');
+
+      let axiosConfig = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        let data = JSON.stringify(Object.fromEntries(new FormData(form)));
+
+        try {
+          const response = await axios.post(form.action, data, axiosConfig);
+          const newColor = response.data;
+          console.log(`Got new color! ${newColor}`);
+          return newColor;
+        } catch (errors) {
+          console.error(errors);
+        }
+      });
+    </script>
 
   </body>
 </html>
