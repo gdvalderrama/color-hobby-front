@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="b-example-divider mb-0"></div>
+      <div class="mb-0"></div>
 
       <div class="px-4 py-5 text-center">
         <form method="POST" action="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/get_closest_color">
@@ -99,10 +99,15 @@
         try {
           const response = await axios.post(form.action, data, axiosConfig);
           const newColor = response.data;
-          console.log(`Got new color! ${newColor}`);
-          return newColor;
+          // {"name": "Blue Fluorescent", "paint_type": "Fluorescent", "paint_color": "#0370b1", "difference": 110.6752004741803}
+          document.getElementById('result').innerHTML = `<div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Success!</h4>
+            <p>The closest color is <span class="text-primary">${newColor.name} (${newColor.paint_color})</span>.</p>`
         } catch (errors) {
           console.error(errors);
+          document.getElementById('result').innerHTML = `<div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Fail!</h4>
+            <p>There was an error, please try again :(</p>`
         }
       });
     </script>
