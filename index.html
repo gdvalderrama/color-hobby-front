@@ -8,10 +8,8 @@
 
     <title>Color approximator</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Favicons -->
     <link rel="icon" href="assets/icon.png">
     <meta name="theme-color" content="#7952b3">
 
@@ -23,14 +21,14 @@
   <body>
 
     <main>
-      <div class="bg-dark text-secondary px-4 py-5 text-center">
+      <div class="bg-gray-800 text-gray-400 px-4 py-5 text-center">
         <div class="py-5">
-          <h1 class="display-5 fw-bold text-white py-5">Color approximator</h1>
-          <div class="col-lg-6 mx-auto">
-            <p class="fs-5">
+          <h1 class="text-5xl font-bold text-white py-5">Color approximator</h1>
+          <div class="max-w-lg mx-auto">
+            <p class="text-lg">
               Quickly get the closest color in a different paint range.
             </p>
-            <p class="fs-5 mb-4">
+            <p class="text-lg mb-4">
               Choose the desired color range between Citadel, Vallejo, AK...
             </p>
           </div>
@@ -41,36 +39,41 @@
 
       <div class="px-4 py-5 text-center">
         <form method="POST" action="https://cepd8d48ok.execute-api.eu-west-1.amazonaws.com/get_closest_color">
-          <div class="row g-3">
+          <div class="flex flex-wrap -mx-3 mb-6 justify-center">
 
-            <div class="col-sm-6 col-lg-4 offset-lg-1">
-              <label for="range" class="form-label">Paint Range</label>
-              <select class="form-select" name="paint_range_id" required="">
-                <option value="" disabled selected>Choose...</option>
-                <option value="CPS">Citadel</option>
-                <option value="VMC">Vallejo Model</option>
-                <option value="VGC">Vallejo Game</option>
-                <option value="AKT">AK</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid paint range.
+            <div class="w-full md:w-1/2 lg:w-1/3 px-3 mb-6 md:mb-0">
+              <label for="range" class="block text-gray-700 text-sm font-bold mb-2">Paint Range</label>
+              <div class="relative">
+                <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="paint_range_id" required="">
+                  <option value="" disabled selected>Choose...</option>
+                  <option value="CPS">Citadel</option>
+                  <option value="VMC">Vallejo Model</option>
+                  <option value="VGC">Vallejo Game</option>
+                  <option value="AKT">AK</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
               </div>
+              <p class="text-red-500 text-xs italic hidden">
+                Please provide a valid paint range.
+              </p>
             </div>
 
-            <div class="col-sm-6 col-lg-4 offset-lg-1">
-              <label for="color" class="form-label">Color (hex code)</label>
-              <input type="text" class="form-control" name="color" placeholder="#0370b1" value="" required="">
-              <div class="invalid-feedback">
+            <div class="w-full md:w-1/2 lg:w-1/3 px-3">
+              <label for="color" class="block text-gray-700 text-sm font-bold mb-2">Color (hex code)</label>
+              <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="color" placeholder="#0370b1" value="" required="">
+              <p class="text-red-500 text-xs italic hidden">
                 Valid color hex code is required.
-              </div>
+              </p>
               <div>
-                <button id="color-picker" class="btn btn-secondary btn-sm mt-1">Use color picker</button>
+                <button id="color-picker" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded text-sm mt-1">Use color picker</button>
               </div>
             </div>
 
           </div>
 
-          <button class="w-50 btn btn-primary btn-lg m-5">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg mt-5 w-1/2">
             Get color!
           </button>
 
@@ -83,7 +86,6 @@
 
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vanilla-picker@2"></script>
 
@@ -112,14 +114,16 @@
           const response = await axios.post(form.action, data, axiosConfig);
           const newColor = response.data;
           // {"name": "Blue Fluorescent", "paint_type": "Fluorescent", "paint_color": "#0370b1", "difference": 110.6752004741803}
-          document.getElementById('result').innerHTML = `<div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Success!</h4>
-            <p>The closest color is <span class="text-primary">${newColor.name}</span> <span style="color:${newColor.paint_color}">&#9632;</span></p>`
+          document.getElementById('result').innerHTML = `<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4" role="alert">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">The closest color is <span class="text-blue-700">${newColor.name}</span> <span style="color:${newColor.paint_color}">&#9632;</span></span>
+          </div>`
         } catch (errors) {
           console.error(errors);
-          document.getElementById('result').innerHTML = `<div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading">Fail!</h4>
-            <p>There was an error, please try again :(</p>`
+          document.getElementById('result').innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+            <strong class="font-bold">Fail!</strong>
+            <span class="block sm:inline">There was an error, please try again :(</span>
+          </div>`
         }
       });
     </script>
