@@ -75,6 +75,12 @@ function showResult(html) {
   }
 }
 
+function safeText(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str ?? '');
+  return d.innerHTML;
+}
+
 form.addEventListener('submit', async event => {
   event.preventDefault();
 
@@ -108,10 +114,10 @@ form.addEventListener('submit', async event => {
     const newColor = await response.json();
     showResult(`<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded transition-opacity duration-300" role="alert">
       <strong class="font-bold">Success!</strong>
-      <span class="block sm:inline">The closest color is <span class="font-semibold text-blue-800">${newColor.name}</span> <span style="color:${newColor.paint_color}">&#9632;</span></span>
-      <p class="text-sm mt-2">Paint Type: <span class="font-medium">${newColor.paint_type}</span></p>
-      <p class="text-sm">Hex Code: <span class="font-medium">${newColor.paint_color}</span></p>
-      <p class="text-sm">Difference Score: <span class="font-medium">${newColor.difference.toFixed(2)}</span></p>
+      <span class="block sm:inline">The closest color is <span class="font-semibold text-blue-800">${safeText(newColor.name)}</span> <span style="color:${safeText(newColor.paint_color)}">&#9632;</span></span>
+      <p class="text-sm mt-2">Paint Type: <span class="font-medium">${safeText(newColor.paint_type)}</span></p>
+      <p class="text-sm">Hex Code: <span class="font-medium">${safeText(newColor.paint_color)}</span></p>
+      <p class="text-sm">Difference Score: <span class="font-medium">${typeof newColor.difference === 'number' ? newColor.difference.toFixed(2) : safeText(newColor.difference)}</span></p>
     </div>`);
   } catch (err) {
     console.error(err);
