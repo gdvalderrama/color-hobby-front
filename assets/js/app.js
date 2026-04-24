@@ -21,6 +21,7 @@ picker.onDone = function (color) {
   const hex = color.hex.substring(0, 7);
   colorInput.value = hex;
   selectedColorPreview.style.backgroundColor = hex;
+  picker.setColor(hex, true);
   validateInput(colorInput);
 };
 
@@ -35,6 +36,7 @@ colorInput.addEventListener('input', () => {
   const value = colorInput.value;
   if (/^#[0-9a-fA-F]{6}$/.test(value)) {
     selectedColorPreview.style.backgroundColor = value;
+    picker.setColor(value, true);
     colorInput.classList.remove('border-red-500');
     document.getElementById('color-feedback').classList.add('hidden');
   } else {
