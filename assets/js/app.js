@@ -66,6 +66,15 @@ colorInput.addEventListener('blur', () => validateInput(colorInput));
 rangeSelect.addEventListener('blur', () => validateInput(rangeSelect));
 rangeSelect.addEventListener('change', () => validateInput(rangeSelect));
 
+function showResult(html) {
+  resultDiv.innerHTML = html;
+  const el = resultDiv.querySelector('div');
+  if (el) {
+    el.style.opacity = '0';
+    requestAnimationFrame(() => { el.style.opacity = '1'; });
+  }
+}
+
 form.addEventListener('submit', async event => {
   event.preventDefault();
 
@@ -73,20 +82,17 @@ form.addEventListener('submit', async event => {
   const isColorValid = validateInput(colorInput);
 
   if (!isRangeValid || !isColorValid) {
-    resultDiv.innerHTML = `<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative opacity-0" role="alert">
+    showResult(`<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded transition-opacity duration-300" role="alert">
       <strong class="font-bold">Heads up!</strong>
       <span class="block sm:inline">Please correct the errors in the form.</span>
-    </div>`;
-    resultDiv.querySelector('div').style.opacity = '1';
+    </div>`);
     return;
   }
 
-  // Show loading spinner
-  resultDiv.innerHTML = `<div class="flex items-center justify-center p-4 opacity-0">
+  showResult(`<div class="flex items-center justify-center p-4 transition-opacity duration-300">
     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
     <div class="ml-3 text-gray-700">Finding the closest color...</div>
-  </div>`;
-  resultDiv.querySelector('div').style.opacity = '1';
+  </div>`);
 
   const payload = Object.fromEntries(new FormData(form));
 
@@ -100,20 +106,18 @@ form.addEventListener('submit', async event => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const newColor = await response.json();
-    resultDiv.innerHTML = `<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative opacity-0" role="alert">
+    showResult(`<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded transition-opacity duration-300" role="alert">
       <strong class="font-bold">Success!</strong>
       <span class="block sm:inline">The closest color is <span class="font-semibold text-blue-800">${newColor.name}</span> <span style="color:${newColor.paint_color}">&#9632;</span></span>
       <p class="text-sm mt-2">Paint Type: <span class="font-medium">${newColor.paint_type}</span></p>
       <p class="text-sm">Hex Code: <span class="font-medium">${newColor.paint_color}</span></p>
       <p class="text-sm">Difference Score: <span class="font-medium">${newColor.difference.toFixed(2)}</span></p>
-    </div>`;
-    resultDiv.querySelector('div').style.opacity = '1';
+    </div>`);
   } catch (err) {
     console.error(err);
-    resultDiv.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative opacity-0" role="alert">
+    showResult(`<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded transition-opacity duration-300" role="alert">
       <strong class="font-bold">Fail!</strong>
       <span class="block sm:inline">There was an error, please try again :(</span>
-    </div>`;
-    resultDiv.querySelector('div').style.opacity = '1';
+    </div>`);
   }
 });
