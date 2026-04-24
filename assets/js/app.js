@@ -138,10 +138,12 @@ form.addEventListener('submit', async event => {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const newColor = await response.json();
+    const data = await response.json();
+    const colors = Array.isArray(data) ? data : [data];
+    const cards = colors.map(c => buildColorCard(c)).join('');
     showResult(`<div class="transition-opacity duration-300">
-      <h2 class="text-gray-700 font-semibold mb-3">Closest match:</h2>
-      <div class="space-y-3">${buildColorCard(newColor)}</div>
+      <h2 class="text-gray-700 font-semibold mb-3">Closest match${colors.length > 1 ? 'es' : ''}:</h2>
+      <div class="space-y-3">${cards}</div>
     </div>`);
   } catch (err) {
     console.error(err);
