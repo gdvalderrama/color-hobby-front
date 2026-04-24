@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, AK, and more.">
+    <meta name="description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, Army Painter, Scale75, Reaper, and many more.">
     <meta name="author" content="gdvalderrama">
 
     <!-- Open Graph / Social meta tags -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Color Approximator">
-    <meta property="og:description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, AK, and more.">
+    <meta property="og:description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, Army Painter, Scale75, Reaper, and many more.">
     <meta property="og:url" content="https://guiomar.xyz/color-hobby-front/">
     <meta property="og:image" content="https://guiomar.xyz/color-hobby-front/assets/icon.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Color Approximator">
-    <meta name="twitter:description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, AK, and more.">
+    <meta name="twitter:description" content="Find the closest matching paint color across popular ranges like Citadel, Vallejo, Army Painter, Scale75, Reaper, and many more.">
     <meta name="twitter:image" content="https://guiomar.xyz/color-hobby-front/assets/icon.png">
 
     <title>Color Approximator</title>
@@ -35,7 +35,7 @@
           Quickly find the closest color in a different paint range.
         </p>
         <p class="text-lg">
-          Choose between popular ranges like Citadel, Vallejo, AK, and more.
+          Choose between popular ranges like Citadel, Vallejo, Army Painter, Scale75, Reaper, and many more.
         </p>
       </div>
 
@@ -48,11 +48,86 @@
               <div class="relative">
                 <select id="paint_range_id" name="paint_range_id" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition duration-200 ease-in-out hover:border-gray-400" required>
                   <option value="" disabled selected>Choose a paint range...</option>
-                  <option value="CPS">Citadel</option>
-                  <option value="VMC">Vallejo Model</option>
-                  <option value="VGC">Vallejo Game</option>
-                  <option value="AKT">AK</option>
-                  </select>
+
+                  <optgroup label="AK Interactive">
+                    <option value="AKI">AK Interactive</option>
+                    <option value="AKT">AK Interactive 3rd Gen Acrylics</option>
+                    <option value="AKA">AK Interactive Acrylics</option>
+                    <option value="AKR">AK Interactive Real Color</option>
+                    <option value="ABT">AK Abteilung 502</option>
+                  </optgroup>
+
+                  <optgroup label="The Army Painter">
+                    <option value="APW">Warpaints</option>
+                    <option value="APF">Warpaints Fanatic</option>
+                    <option value="APS">Speedpaint 2.0</option>
+                    <option value="APA">Warpaints Air</option>
+                    <option value="APM">Masterclass</option>
+                  </optgroup>
+
+                  <optgroup label="Badger">
+                    <option value="BFF">Freakflex</option>
+                    <option value="BMT">Minitaire</option>
+                    <option value="BSZ">Stynylrez</option>
+                  </optgroup>
+
+                  <optgroup label="Citadel">
+                    <option value="CPS">Citadel Painting System</option>
+                  </optgroup>
+
+                  <optgroup label="Monument Hobbies">
+                    <option value="MAM">AMP Colors</option>
+                    <option value="MEA">Expert Acrylics</option>
+                    <option value="MPA">Pro Acryl</option>
+                  </optgroup>
+
+                  <optgroup label="Scale75">
+                    <option value="SCC">Scalecolor</option>
+                    <option value="SCA">Scalecolor Artist</option>
+                    <option value="SCF">Scalecolor Floww</option>
+                    <option value="SDP">Drop &amp; Paint</option>
+                    <option value="SIN">Instant Colors</option>
+                    <option value="SMC">Mystic Colors</option>
+                    <option value="SPE">Prism Effect</option>
+                  </optgroup>
+
+                  <optgroup label="Vallejo">
+                    <option value="VGC">Game Color</option>
+                    <option value="VGA">Game Air</option>
+                    <option value="VMC">Model Color</option>
+                    <option value="VMA">Model Air</option>
+                    <option value="VMW">Model Wash</option>
+                    <option value="VMH">Mecha Color</option>
+                    <option value="VME">Metal Color</option>
+                    <option value="VPA">Panzer Aces</option>
+                    <option value="VSP">Surface Primer</option>
+                    <option value="VHS">Hobby Spray Paint</option>
+                    <option value="VXP">Xpress</option>
+                    <option value="VAX">Auxiliaries</option>
+                    <option value="VNO">Nocturna</option>
+                    <option value="VLG">Liquid Gold</option>
+                    <option value="VTS">The Shifters</option>
+                  </optgroup>
+
+                  <optgroup label="Other">
+                    <option value="CLF">Colour Forge</option>
+                    <option value="CDA">Coat D'Arms</option>
+                    <option value="DAR">Daler-Rowney</option>
+                    <option value="FPS">Foundry Paint System</option>
+                    <option value="FP3">Formula P3</option>
+                    <option value="GSW">Green Stuff World</option>
+                    <option value="HUM">Huge Miniatures</option>
+                    <option value="INS">INSTAR</option>
+                    <option value="KKO">Kimera Kolors</option>
+                    <option value="RMS">Reaper Master Series</option>
+                    <option value="REC">Revell Enamel Color</option>
+                    <option value="SWM">Secret Weapon Miniatures</option>
+                    <option value="TAM">Tamiya</option>
+                    <option value="TDK">Turbo Dork</option>
+                    <option value="TTC">Two Thin Coats</option>
+                    <option value="WAR">WarColours</option>
+                  </optgroup>
+                </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                 </div>
