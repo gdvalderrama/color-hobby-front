@@ -83,6 +83,31 @@ function safeText(str) {
   return d.innerHTML;
 }
 
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+}
+
+function buildColorCard(color) {
+  const diff = typeof color.difference === 'number' ? color.difference.toFixed(2) : safeText(color.difference);
+  return `
+    <div class="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+      <div class="flex-shrink-0 w-16 h-16 rounded-lg border border-gray-300 shadow-inner" style="background-color:${safeText(color.paint_color)}"></div>
+      <div class="flex-1 min-w-0">
+        <p class="font-semibold text-gray-800">${safeText(color.name)}</p>
+        <p class="text-sm text-gray-500">Type: ${safeText(color.paint_type)}</p>
+        <p class="text-sm text-gray-500 flex items-center gap-2">
+          Hex: <span class="font-mono font-medium">${safeText(color.paint_color)}</span>
+          <button onclick="copyToClipboard('${safeText(color.paint_color)}', this)"
+            class="text-xs px-2 py-0.5 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded transition duration-150">Copy</button>
+        </p>
+        <p class="text-sm text-gray-500">Difference score: <span class="font-medium">${diff}</span></p>
+      </div>
+    </div>`;
+}
+
 form.addEventListener('submit', async event => {
   event.preventDefault();
 
@@ -114,12 +139,9 @@ form.addEventListener('submit', async event => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const newColor = await response.json();
-    showResult(`<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded transition-opacity duration-300" role="alert">
-      <strong class="font-bold">Success!</strong>
-      <span class="block sm:inline">The closest color is <span class="font-semibold text-blue-800">${safeText(newColor.name)}</span> <span style="color:${safeText(newColor.paint_color)}">&#9632;</span></span>
-      <p class="text-sm mt-2">Paint Type: <span class="font-medium">${safeText(newColor.paint_type)}</span></p>
-      <p class="text-sm">Hex Code: <span class="font-medium">${safeText(newColor.paint_color)}</span></p>
-      <p class="text-sm">Difference Score: <span class="font-medium">${typeof newColor.difference === 'number' ? newColor.difference.toFixed(2) : safeText(newColor.difference)}</span></p>
+    showResult(`<div class="transition-opacity duration-300">
+      <h2 class="text-gray-700 font-semibold mb-3">Closest match:</h2>
+      <div class="space-y-3">${buildColorCard(newColor)}</div>
     </div>`);
   } catch (err) {
     console.error(err);
